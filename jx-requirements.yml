@@ -1,35 +1,91 @@
+autoUpdate:
+  enabled: false
+  schedule: ""
+bootConfigURL: https://github.com/jenkins-x/jenkins-x-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
-  environmentGitPublic: false
-  project: ""
-  provider: gke
-  zone: ""
-gitops: true
+  clusterName: eks-milantechlive-v16
+  devEnvApprovers:
+  - jtmilan
+  environmentGitOwner: milantech-live
+  environmentGitPublic: true
+  gitKind: github
+  gitName: github
+  gitServer: https://github.com
+  namespace: jx
+  project: jx-development
+  provider: eks
+  region: us-west-2
+  registry: docker.io
+  zone: us-west-2
 environments:
-- key: dev
-- key: staging
-- key: production
+- ingress:
+    domain: eks.milantech.live
+    externalDNS: true
+    ignoreLoadBalancer: true
+    namespaceSubDomain: .
+    tls:
+      email: admin@milantech.live
+      enabled: true
+      production: true
+  key: dev
+  repository: eks-milantechlive-v16-dev
+- ingress:
+    domain: jx.milantech.live
+    externalDNS: true
+    ignoreLoadBalancer: true
+    namespaceSubDomain: .
+    tls:
+      email: admin@milantech.live
+      enabled: true
+      production: true
+  key: staging
+  repository: eks-milantechlive-v16-staging
+- ingress:
+    domain: jx.milantech.live
+    externalDNS: true
+    ignoreLoadBalancer: true
+    namespaceSubDomain: .
+    tls:
+      email: admin@milantech.live
+      enabled: true
+      production: true
+  key: production
+  repository: eks-milantechlive-v16-production
+gitops: true
 ingress:
-  domain: ""
-  externalDNS: false
+  domain: eks.milantech.live
+  externalDNS: true
+  ignoreLoadBalancer: true
+  namespaceSubDomain: .
   tls:
-    email: ""
-    enabled: false
-    production: false
+    email: admin@milantech.live
+    enabled: true
+    production: true
 kaniko: true
-secretStorage: local
+repository: nexus
+secretStorage: vault
 storage:
+  backup:
+    enabled: true
+    url: s3://milantech-eks-state/velero
   logs:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://eks-milantechlive-logs-a3eeb5bc-ecf1-4430-b924-d29a5110f433
   reports:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://eks-milantechlive-reports-ff825c24-2279-4a62-a3aa-f4895865bbd9
   repository:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://eks-milantechlive-repository-e02e81ae-80a8-482c-be4b-c48f6be474
+vault:
+  aws:
+    autoCreate: true
+    iamUserName: jxvault
+  disableURLDiscovery: true
+velero:
+  schedule: ""
+  ttl: ""
 versionStream:
-  ref: "master"
+  ref: v1.0.507
   url: https://github.com/jenkins-x/jenkins-x-versions.git
-webhook: lighthouse
+webhook: prow

@@ -1,0 +1,15 @@
+adminUser:
+  password: vault:eks-milantechlive-v16/adminUser:password
+  username: admin
+docker:
+  email: docker@milantech.live
+  password: vault:eks-milantechlive-v16/docker:password
+  url: https://index.docker.io/v1/
+  username: milantech
+enableDocker: true
+pipelineUser:
+  email: admin@milantech.live
+  token: vault:eks-milantechlive-v16/pipelineUser:token
+  username: milantechlive
+prow:
+  hmacToken: vault:eks-milantechlive-v16/prow:hmacToken
