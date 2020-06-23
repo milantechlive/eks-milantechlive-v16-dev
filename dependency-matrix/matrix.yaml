@@ -1,0 +1,7 @@
+dependencies:
+- host: github.com
+  owner: milantech-live
+  repo: express-hello
+  url: https://github.com/milantech-live/express-hello.git
+  version: ""
+  versionURL: ""
